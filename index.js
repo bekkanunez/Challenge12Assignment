@@ -25,7 +25,7 @@ prompt([
       });
     }
     if (task == 'view all employees') {
-      db.query('SELECT * FROM employee', function (err, results) {
+      db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, employee.manager_id AS manager FROM role JOIN employee on employee.role_id = role.id JOIN department on role.department_id = department.id;', function (err, results) {
         console.table(results);
       });
     }
