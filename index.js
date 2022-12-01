@@ -1,5 +1,5 @@
 const db = require('./db/connection');
-const {prompt} = require('inquirer');
+const {prompt, default: inquirer} = require('inquirer');
 const mysql = require('mysql2');
 const consoleTable = require('console.table');
 
@@ -16,18 +16,24 @@ prompt([
   .then(({task}) => {
     if (task == 'view all departments') {
       db.query('SELECT * FROM department', function (err, results) {
-        console.table(results);
+        console.table(results)
+        prompt(); 
       });
     }
-    if (task == 'view all roles') {
+    else if (task == 'view all roles') {
       db.query('SELECT role.id, role.title, department.name AS department, role.salary FROM role JOIN department ON role.department_id = department.id', function (err, results) {
-        console.table(results);
+        console.table(results)
+        prompt();
       });
     }
-    if (task == 'view all employees') {
+    else if (task == 'view all employees') {
       db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, employee.manager_id AS manager FROM role JOIN employee on employee.role_id = role.id JOIN department on role.department_id = department.id;', function (err, results) {
         console.table(results);
+        prompt()
       });
     }
-
+  
 })
+
+
+
